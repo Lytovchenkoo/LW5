@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles.css" />
+    <title>Student</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <form action="/student/search" method="POST" class="group-search">
+          <div class="group-search__input-wrapper">
+            <input
+              type="text"
+              name="group"
+              value="<%= selectedGroup || '' %>"
+              required
+              class="group-search__input"
+              placeholder="Введіть дані для пошуку"
+            />
+            <button
+              type="submit"
+              class="group-search__icon group-search__icon--search"
+            >
+              🔍
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <% if (students && students.length > 0) { %>
+      <div class="answear">
+        <p>Результати пошуку для "<%= selectedGroup %>":</p>
+      </div>
+
+      <table class="student-table">
+        <thead>
+          <tr>
+            <th>ПІБ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% students.forEach(student => { %>
+          <tr>
+            <td>
+              <%= student.name %>
+              <% if (student.group && student.group.name) { %> (Група: <%= student.group.name %>)
+              <% } else if (student.group) { %> (Група: <%= student.group %>) <% } %>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <% } else if (typeof selectedGroup !== 'undefined' && selectedGroup !== '') { %>
+      <p class="answear">
+        Нічого не знайдено за запитом "<%= selectedGroup %>".
+      </p>
+      <% } %>
+    </div>
+  </body>
+</html>
